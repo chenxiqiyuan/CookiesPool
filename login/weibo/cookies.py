@@ -11,7 +11,6 @@ from os.path import abspath, dirname
 
 TEMPLATES_FOLDER = dirname(abspath(__file__)) + '/templates/'
 
-
 class WeiboCookies():
     def __init__(self, username, password, browser):
         self.url = 'https://passport.weibo.cn/signin/login?entry=mweibo&r=https://m.weibo.cn/'
@@ -226,7 +225,6 @@ class WeiboCookies():
                 'content': '登录失败'
             }
 
-
 if __name__ == '__main__':
-    result = WeiboCookies('14773427930', 'x6pybpakq1').main()
+    result = WeiboCookies('13626918317', 'x6pybpakq1').main()
     print(result)

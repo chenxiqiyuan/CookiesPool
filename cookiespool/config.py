@@ -7,17 +7,25 @@ REDIS_PORT = 6379
 # Redis密码，如无填None
 REDIS_PASSWORD = 'foobared'
 
+# MongoDB数据库地址
+MongoDB_HOST = 'localhost'
+
+# MongoDB端口
+MongoDB_PORT = 27017
+
 # 产生器使用的浏览器
 BROWSER_TYPE = 'Chrome'
 
 # 产生器类，如扩展其他站点，请在此配置
 GENERATOR_MAP = {
-    'weibo': 'WeiboCookiesGenerator'
+    'weibo': 'WeiboCookiesGenerator',
+    'ele' : 'EleCookiesGenerator'
 }
 
 # 测试类，如扩展其他站点，请在此配置
 TESTER_MAP = {
-    'weibo': 'WeiboValidTester'
+    'weibo': 'WeiboValidTester',
+    'ele': 'EleValidTester'
 }
 
 TEST_URL_MAP = {

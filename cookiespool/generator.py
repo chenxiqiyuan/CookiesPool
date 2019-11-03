@@ -2,9 +2,9 @@ import json
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
 from cookiespool.config import *
-from cookiespool.db import RedisClient
+from cookiespool.db import RedisClient, MongoDBClient
 from login.weibo.cookies import WeiboCookies
-
+from login.ele.cookies import EleCookies
 
 class CookiesGenerator(object):
     def __init__(self, website='default'):
@@ -116,7 +116,53 @@ class WeiboCookiesGenerator(CookiesGenerator):
         """
         return WeiboCookies(username, password, self.browser).main()
 
-
+class EleCookiesGenerator(object):
+    def __init__(self, website='ele'):
+        """
+        初始化操作
+        :param website: 站点名称
+        """
+        self.website = website
+        self.cookies_db = MongoDBClient('cookies', 'ele').db
+            
+    def new_cookies(self, phone):
+        """
+        生成Cookies
+        :param username: 用户名
+        :param password: 密码
+        :return: 用户名和Cookies
+        """
+        return EleCookies(phone).main()
+        
+    def run(self):
+        """
+        运行, 得到所有账户, 然后顺次模拟登录
+        :return:
+        """
+        accounts_usernames = self.accounts_db.usernames()
+        cookies_usernames = self.cookies_db.usernames()
+        
+        for username in accounts_usernames:
+            if not username in cookies_usernames:
+                password = self.accounts_db.get(username)
+                print('正在生成Cookies', '账号', username, '密码', password)
+                result = self.new_cookies(username, password)
+                # 成功获取
+                if result.get('status') == 1:
+                    cookies = self.process_cookies(result.get('content'))
+                    print('成功获取到Cookies', cookies)
+                    if self.cookies_db.set(username, json.dumps(cookies)):
+                        print('成功保存Cookies')
+                # 密码错误，移除账号
+                elif result.get('status') == 2:
+                    print(result.get('content'))
+                    if self.accounts_db.delete(username):
+                        print('成功删除账号')
+                else:
+                    print(result.get('content'))
+        else:
+            print('所有账号都已经成功获取Cookies')
+    
 if __name__ == '__main__':
-    generator = WeiboCookiesGenerator()
-    generator.run()
+    generator = EleCookiesGenerator()
+    #generator.run()

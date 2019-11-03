@@ -1,8 +1,6 @@
 import random
 import redis
 from cookiespool.config import *
-
-
 class RedisClient(object):
     def __init__(self, type, website, host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD):
         """
@@ -75,8 +73,50 @@ class RedisClient(object):
         """
         return self.db.hgetall(self.name())
 
+import pymongo
+class MongoDBClient(object):
+    def __init__(self, type, website, host=MongoDB_HOST, port=MongoDB_PORT):
+        """
+        初始化 MongoDB 连接
+        :param host: 地址
+        :param port: 端口
+        """
+        self.type = type
+        self.website = website
+        self.db = pymongo.MongoClient(host=MongoDB_HOST, port=MongoDB_PORT)[self.website][self.type]
+
+    def set_cookies(self, phone, cookies):
+        """
+        设置键值对
+        :param username: 用户名
+        :param value: dict 形式的 Cookies
+        :return:
+        """
+        phone_cookies = {
+        "phone":phone,
+        "cookies":cookies
+        }
+        return self.db.insert_one(phone_cookies)
+
+    def get_cookies(self, phone):
+        """
+        根据键名获取键值
+        :param phone: 手机号
+        :return: dict 形式的 手机号 和 cookies
+        """
+        result = self.db.find_one({'phone': phone})
+        del result["_id"]
+        return result
 
 if __name__ == '__main__':
-    conn = RedisClient('accounts', 'weibo')
-    result = conn.set('hell2o', 'sss3s')
+    #conn = RedisClient('accounts', 'weibo')
+    #result = conn.set('hell2o', 'sss3s')
+    #print(result)
+
+    conn = MongoDBClient('cookies', 'ele')
+    my_ele = {
+        "phone":"13626918317",
+        "cookies":""
+        }
+    result = conn.db.insert_one(my_ele)
     print(result)

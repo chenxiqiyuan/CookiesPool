@@ -2,7 +2,6 @@
 
 可扩展的Cookies池，目前对接了新浪微博，[m.weibo.cn](https://m.weibo.cn)，可自行扩展其他站点
 
-
 ## 安装
 
 ```
