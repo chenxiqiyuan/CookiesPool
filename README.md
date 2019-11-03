@@ -22,6 +22,12 @@ REDIS_PORT = 6379
 # Redis密码，如无填None
 REDIS_PASSWORD = 'foobared'
 
+# MongoDB数据库地址
+MongoDB_HOST = 'localhost'
+
+# MongoDB端口
+MongoDB_PORT = 27017
+
 # 产生器使用的浏览器
 BROWSER_TYPE = 'Chrome'
 
