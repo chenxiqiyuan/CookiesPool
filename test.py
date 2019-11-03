@@ -1,7 +1,10 @@
 from cookiespool.generator import EleCookiesGenerator
 from cookiespool.db import MongoDBClient
+from cookiespool.api import *
 import requests
 def main():
+    app.run(host='0.0.0.0')
+    pass
     #测试 ele 生成 cookie 
     #conn = MongoDBClient('cookies', 'ele')
     #generator = EleCookiesGenerator()
