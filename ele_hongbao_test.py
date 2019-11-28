@@ -44,11 +44,11 @@ def receive_hongbao_requests(url):
         }
 
         cookies = {
-            'SID': 'XfqoQVu1Cuw6uEXiW1bH0FpnA1t2q1Fr19TA', 
-            'USERID': '117539558', 
-            'UTUSER': '117539558', 
-            'ZDS': '1.0|1572574449|+HMkGaM6jw1fJFEMjnrmdElhKsMb+lt8g6C3U9+ilHENYxO4KLZx+shue7lljxzd', 
-            'track_id': '1572574449|5c04cf8794523e3234de77360c167e94690b5fd9a260928b4c|e2695e1965d4b94ec3b78bb30ce573fb'
+			'SID': 'UzCZP6BIkXFI5O4JNqHFtOmmTpU076eAVOAw', 
+			'USERID': '117539558', 
+			'UTUSER': '117539558', 
+			'ZDS': '1.0|1574429613|YNTl3nLtNA7UIfscW8D+jS4Xe09s/xPIKPLm0QBTKH54LVbaMpIhHjpDyWAD5Yo0', 
+			'track_id': '1574429613|49e6c624d49888c24c03b4a6a6ac1f9e0a54117745f7266c59|7c27f2dd1ad31a16c3770324d77d44fb'
             }
 
         #通过捕获警告到日志的方式忽略警告
@@ -65,7 +65,7 @@ def receive_hongbao_requests(url):
     
 def main():
     # 使用requests领取红包
-    url = 'https://h5.ele.me/hongbao/?order_id=2117758118697965593&total_count=15&is_lucky_group=True&lucky_number=0&sn=1d63c9c9e1311819.2&theme_id=4835'
+    url = 'https://h5.ele.me/hongbao/?order_id=2118938891498873877&total_count=15&is_lucky_group=True&lucky_number=0&sn=1d67fbb1f88ce415.2&theme_id=569'
     html = receive_hongbao_requests(url)
     print(html)
 

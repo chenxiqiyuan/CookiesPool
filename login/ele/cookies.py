@@ -5,13 +5,14 @@ import time
 import logging
 import base64
 from PIL import Image
+
 # get_cookies_requests
 class EleCookies():
     def __init__(self, phone):
         self.s = requests.Session()
         self.phone = phone
     
-    def open(self):
+    def login(self):
         """
         使用 requests 登陆
         :return: None
@@ -37,15 +38,16 @@ class EleCookies():
         #通过捕获警告到日志的方式忽略警告
         logging.captureWarnings(True)
         #SSL证书验证verify=False
-        #发送验证码
+        #发送手机验证码
         response = self.s.post('https://h5.ele.me/restapi/eus/login/mobile_send_code', headers=headers, data=json.dumps(data), verify=False)
                
-        #需要输入验证码
+        #需要输入图形验证码
         if response.status_code == 400:
             while(1):
                 #获取验证码图片，更改 headers 和 data
                 headers["path"] = "/restapi/eus/v3/captchas"
                 data = {"captcha_str":self.phone}
+				#发送手机验证码
                 response = self.s.post('https://h5.ele.me/restapi/eus/v3/captchas', headers=headers, data=json.dumps(data), verify=False)
                 #提取 captcha_hash 和 captcha_image
                 captcha_hash = json.loads(response.text)["captcha_hash"]
@@ -60,7 +62,12 @@ class EleCookies():
                 im.show()
                 #获取图形验证码，更改 headers 和 data
                 headers["path"] = "/restapi/eus/login/mobile_send_code"
-                data = {"mobile":self.phone, "captcha_value":"", "captcha_hash":captcha_hash, "scf":"ms"}
+                data = {
+				"mobile":self.phone, 
+				"captcha_value":"", 
+				"captcha_hash":captcha_hash, 
+				"scf":"ms"
+				}
                 data["captcha_value"] = self.get_captcha_value()
                 #发送验证码
                 response = self.s.post('https://h5.ele.me/restapi/eus/login/mobile_send_code', headers=headers, data=json.dumps(data), verify=False)
@@ -104,10 +111,10 @@ class EleCookies():
         return requests.utils.dict_from_cookiejar(self.s.cookies)
 
     def main(self):
-        self.open()
+        self.login()
         return self.phone, self.get_cookies()
 
 if __name__ == '__main__':
-    EleCookies('13626918317').main()
+    print(EleCookies('13626918317').main())
     while True:
         time.sleep(10)

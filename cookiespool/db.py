@@ -1,6 +1,7 @@
 import random
 import redis
 from cookiespool.config import *
+
 class RedisClient(object):
     def __init__(self, type, website, host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD):
         """
@@ -85,6 +86,15 @@ class MongoDBClient(object):
         self.website = website
         self.db = pymongo.MongoClient(host=MongoDB_HOST, port=MongoDB_PORT)[self.website][self.type]
 
+    def get_cookies(self, phone):
+        """
+        根据键名获取键值
+        :param phone: 手机号
+        :return: dict 形式的 手机号 和 cookies
+        """
+        result = self.db.find_one({'phone': phone}, {"_id": 0})
+        return result
+
     def set_cookies(self, phone, cookies):
         """
         设置键值对
@@ -96,17 +106,12 @@ class MongoDBClient(object):
         "phone":phone,
         "cookies":cookies
         }
-        return self.db.insert_one(phone_cookies)
-
-    def get_cookies(self, phone):
-        """
-        根据键名获取键值
-        :param phone: 手机号
-        :return: dict 形式的 手机号 和 cookies
-        """
-        result = self.db.find_one({'phone': phone})
-        del result["_id"]
-        return result
+        result = self.get_cookies(phone)
+        print(result)
+        if result == None:
+            return self.db.insert_one(phone_cookies)
+        else:
+            return self.db.update_one(result, {'$set': phone_cookies})
 
 if __name__ == '__main__':
     #conn = RedisClient('accounts', 'weibo')
