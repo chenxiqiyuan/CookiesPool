@@ -351,3 +351,5 @@ MigrationBackup/
 
 # .bak文件
 *.bak
+
+imageToSave.jpeg

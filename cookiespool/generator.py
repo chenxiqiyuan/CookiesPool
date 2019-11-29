@@ -123,26 +123,30 @@ class EleCookiesGenerator(object):
         :param website: 站点名称
         """
         self.website = website
-        self.cookies_db = MongoDBClient('cookies', website).db
+        self.cookies_db = MongoDBClient('cookies', website)
             
     def new_cookies(self, phone):
         """
-        生成Cookies
-        :param username: 用户名
-        :param password: 密码
+        生成并保存 Cookies
+        :param phone: 手机号
         :return: 用户名和Cookies
         """
-        return EleCookies(phone).main()
+        result = EleCookies(phone).main()
+        if result != None:
+            self.cookies_db.set_cookies(result[0], result[1])
+            return json.loads(result)
+        else:
+            return None
         
     def run(self):
         """
         运行, 得到所有账户, 然后顺次模拟登录
         :return:
         """
-        pass
-        #accounts_usernames = self.accounts_db.usernames()
-        #cookies_usernames = self.cookies_db.usernames()
-        
+        all_phone_cookies = self.cookies_db.all_cookies()
+        for phone_cookies in all_phone_cookies:
+            print(phone_cookies)
+            
         #for username in accounts_usernames:
         #    if not username in cookies_usernames:
         #        password = self.accounts_db.get(username)

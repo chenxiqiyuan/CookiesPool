@@ -113,15 +113,14 @@ class MongoDBClient(object):
         else:
             return self.db.update_one(result, {'$set': phone_cookies})
 
+    def del_cookies(self, phone):
+        return self.db.delete_one({'phone': phone})
+
+    def all_cookies(self):
+        return self.db.find({}, {"_id": 0})
+
 if __name__ == '__main__':
     #conn = RedisClient('accounts', 'weibo')
     #result = conn.set('hell2o', 'sss3s')
     #print(result)
-
-    conn = MongoDBClient('cookies', 'ele')
-    my_ele = {
-        "phone":"13626918317",
-        "cookies":""
-        }
-    result = conn.db.insert_one(my_ele)
-    print(result)
+    pass
