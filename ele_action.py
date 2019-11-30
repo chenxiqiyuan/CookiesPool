@@ -2,7 +2,7 @@
 @Description: 饿了么动作
 @Author: chenxi
 @Date: 2019-09-30 15:18:39
-@LastEditTime: 2019-11-29 20:32:48
+@LastEditTime: 2019-11-30 10:18:54
 @LastEditors: chenxi
 '''
 import json
@@ -129,5 +129,5 @@ if __name__ == '__main__':
     # phone = "18866478774"
     phone = "19859215155"
     main(url, phone)
-    # while True:
-    #     time.sleep(10)
+    while True:
+        time.sleep(10)
