@@ -2,7 +2,7 @@
 @Description: 生成饿了么 cookies 
 @Author: chenxi
 @Date: 2019-10-06 16:07:01
-@LastEditTime: 2019-11-29 19:45:24
+@LastEditTime: 2019-11-29 20:29:49
 @LastEditors: chenxi
 '''
 import json
@@ -20,10 +20,11 @@ class EleCookies():
         self.phone = phone
 
     def login(self):
-        """
-        使用 requests 登陆
-        :return: 
-        """
+        '''
+        @description: 使用 requests 登陆
+        @param : 
+        @return: (phone, cookies)
+        '''
         headers = {
             "method": "POST",
             "authority": "h5.ele.me",
@@ -93,19 +94,21 @@ class EleCookies():
         return self.phone, self.get_cookies()
 
     def get_validate_code(self):
-        """
-        获取手机验证码
-        :return: 手机验证码
-        """
+        '''
+        @description: 获取手机验证码
+        @param : 
+        @return: 手机验证码
+        '''
         print("请输入 %s 的手机验证码" % (self.phone))
         validate_code = input()
         return validate_code
 
     def get_captcha_value(self):
-        """
-        获取图形验证码
-        :return: captcha_value 图形验证码
-        """
+        '''
+        @description: 获取图形验证码
+        @param : 
+        @return: 图形验证码
+        '''
         print("请输入 %s 的图形验证码" % (self.phone))
         captcha_value = input()
         return captcha_value
@@ -129,12 +132,18 @@ class EleCookies():
         return captcha_value
 
     def get_cookies(self):
-        """
-        获取Cookies
-        :return: Cookies字典
-        """
+        '''
+        @description: 获取 cookies
+        @param : 
+        @return: cookies 字典
+        '''
         return requests.utils.dict_from_cookiejar(self.s.cookies)
 
     def main(self):
+        '''
+        @description: 生成 cookies 的主程序
+        @param : 
+        @return: (phone, cookies)
+        '''
         self.login()
         return self.phone, self.get_cookies()

@@ -1,3 +1,10 @@
+'''
+@Description: cookies 生成器 CookiesGenerator
+@Author: chenxi
+@Date: 2019-10-05 22:16:42
+@LastEditTime: 2019-11-29 20:31:19
+@LastEditors: chenxi
+'''
 import json
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities

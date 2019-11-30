@@ -2,7 +2,7 @@
 @Description: 饿了么动作
 @Author: chenxi
 @Date: 2019-09-30 15:18:39
-@LastEditTime: 2019-11-29 19:50:45
+@LastEditTime: 2019-11-29 20:32:48
 @LastEditors: chenxi
 '''
 import json
@@ -53,8 +53,9 @@ def DailyPrize(cookies, longitude="118.09600867331007", latitude="24.58228485658
 def receive_hongbao(url, cookies):
     '''
     @description: 领取红包
-    @param : url : 红包链接
-    @return: cookies : 用户 cookies
+    @param url: 红包链接
+    @param cookies: 用户 cookies
+    @return: cookies: 用户的 cookies
     '''
     try:
         headers = {"authority": "h5.ele.me",
